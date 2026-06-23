@@ -32,6 +32,7 @@
 
         <!-- Custom tooltip -->
         <q-tooltip
+          v-if="tooltipTarget"
           ref="tooltipRef"
           v-model="showTooltip"
           :target="tooltipTarget"
@@ -2683,4 +2684,3 @@ function generateContentHash(type, data) {
   }
 }
 </style>
-

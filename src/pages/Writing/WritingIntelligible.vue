@@ -1,33 +1,4 @@
 <template>
-  <!-- <div class="text-h6 text-bold q-mx-lg q-px-sm q-my-sm flex justify-between" style="color: rgb(70, 70, 70);">
-    <div>
-      {{ modelName }}
-      <q-btn unelevated rounded outline no-caps style="margin-left: 64px;" color="primary" icon="history" label="History" @click="showHistory = true" />
-    </div>
-    <div class="row items-center">
-      <div class="criteria-section">
-        <q-select
-          outlined dense style="width: 440px;" label="Choose a rubric"
-          v-model="selectedCriteria"
-          :options="criteriaOptions"
-        >
-        <template v-slot:before>
-          <q-icon color="primary" name="rule" />
-        </template>
-        </q-select>
-        <q-btn unelevated outline rounded no-caps class="q-ml-md" color="primary" label="Edit Rubric" @click="openCriteriaMaker" />
-      </div>
-    </div>
-  </div> -->
-  <!-- <q-btn unelevated rounded outline no-caps class="q-ml-md" color="secondary" icon="download" label="Save this session" @click="saveData" /> -->
-  <!-- <q-toggle
-    v-model="userScoringEnabled"
-    class="q-ml-md"
-    color="primary"
-    label="Enable User Scoring"
-  /> -->
-
-
   <!-- 历史记录弹出框 -->
   <q-dialog v-model="showHistory">
     <q-card style="width: 900px; max-width: 90vw; max-height: 90vh;">
@@ -43,7 +14,7 @@
             v-for="(record, index) in historyRecords"
             :key="index"
             :title="record.timestamp"
-            :subtitle="'Score: ' + (record.scores?.aiScorePercentage || '--') + '% | ' + (record.rubricName || 'Unknown Rubric')"
+            :subtitle="'Score: ' + (record.scores?.aiScorePercentage || '--') + '% | ' + (record.criteriaName || 'Unknown Criteria Set')"
             :color="index === historyRecords.length - 1 ? 'primary' : 'secondary'"
           >
             <div>
@@ -91,7 +62,7 @@
                               </div>
                               <!-- 显示选中的评分标准内容 -->
                               <div v-if="criterion.aiSelectedScore > 0" class="text-caption text-grey-7 q-ml-sm q-mt-xs">
-                                Score Criteria: {{ criterion.scoreDetails[`score_${criterion.aiSelectedScore}`]?.text }}
+                                Criteria: {{ criterion.scoreDetails[`score_${criterion.aiSelectedScore}`]?.text }}
                               </div>
                               <div v-if="criterion.scoreDetails[`score_${criterion.aiSelectedScore}`]?.reason" class="text-caption text-orange-8 q-ml-sm">
                                 Reason: {{ criterion.scoreDetails[`score_${criterion.aiSelectedScore}`].reason }}
@@ -184,13 +155,13 @@
     <!-- 右侧区域 -->
     <div class="feedback-panel" :style="{ width: rightPanelWidth + '%' }">
       <div v-if="rightPanelWidth < minPanelWidthForContent" class="collapsed-title">
-        <div class="collapsed-title-text">Rubric</div>
+        <div class="collapsed-title-text">Criteria</div>
       </div>
       <template v-else>
           <!-- Criteria 选择区域 -->
           <q-card flat class="criteria-section">
             <q-select
-              outlined dense style="width: 440px;" label="Choose a rubric"
+              outlined dense style="width: 440px;" label="Choose criteria set"
               v-model="selectedCriteria"
               :options="criteriaOptions"
             >
@@ -198,15 +169,7 @@
               <q-icon color="primary" name="list" />
             </template>
             </q-select>
-            <q-btn unelevated outline rounded no-caps class="q-ml-md" color="primary" label="Edit Rubric" @click="openCriteriaMaker" />
           </q-card>
-          <!-- <q-btn unelevated rounded outline no-caps class="q-ml-md" color="secondary" icon="download" label="Save this session" @click="saveData" /> -->
-          <!-- <q-toggle
-            v-model="userScoringEnabled"
-            class="q-ml-md"
-            color="primary"
-            label="Enable User Scoring"
-          /> -->
 
         <!-- 评论和反馈区域 -->
         <q-expansion-item v-if="selectedRubric" class="feedback-container" default-opened
@@ -214,10 +177,10 @@
         >
           <template v-slot:header>
             <q-item-section avatar>
-              <q-icon color="primary" name="sym_o_rubric" />
+              <q-icon color="primary" name="rule" />
             </q-item-section>
             <q-item-section>
-              Rubric of Writing: {{ selectedCriteria.label.toUpperCase() }}
+              Criteria-Grounded Assessment: {{ selectedCriteria.label.toUpperCase() }}
             </q-item-section>
 
             <q-item-section side>
@@ -232,7 +195,7 @@
                 <template v-slot:avatar>
                   <q-icon name="assessment" color="blue" />
                 </template>
-                The writing will be evaluated against each rubric criterion with scores and detailed explanations and suggestions.
+	                The writing will be evaluated against each criterion with scores and detailed explanations and suggestions.
               </q-banner>
             </div> -->
 
@@ -378,9 +341,8 @@
 </template>
 
 <script>
-import { getRubricBasedFeedback, generateRevisedWriting, generateCounterfactualWriting, computeTrueDiffGroup,getAgents, formatDateTime, getRubric } from 'src/components/multiAgentWriting.js'
-import { formatToString, extractRevisedWriting, extractRevisedWritingWithReason, formatDiffGroups, formatToNewString } from 'src/components/utilsWriting.js'
-import { localAPI } from 'boot/axios'
+import { getRubricBasedFeedback, generateCounterfactualWriting } from 'src/components/multiAgentWriting.js'
+import { formatToString, extractRevisedWritingWithReason } from 'src/components/utilsWriting.js'
 import MarkdownIt from 'markdown-it';
 import DiffViewer from 'src/components/DiffViewer.vue';
 import urlParamsStore from 'src/store/urlParams.js';
@@ -486,11 +448,11 @@ export default {
   },
   watch: {
     selectedCriteria(newCriteria) {
-      console.log('SelectedCriteria:', this.selectedCriteria.value);
-      this.selectedRubric = JSON.parse(JSON.stringify(this.selectedCriteria.value));
+      if (!newCriteria?.value) return;
+      console.log('SelectedCriteria:', newCriteria.value);
+      this.selectedRubric = JSON.parse(JSON.stringify(newCriteria.value));
       console.log('selectedRubric:', this.selectedRubric);
 
-      // 更新URL参数
       if (newCriteria && newCriteria.label) {
         urlParamsStore.updateUrlParams({ writingRubric: newCriteria.label });
       }
@@ -551,10 +513,8 @@ export default {
     // 初始化版本管理
     this.initializeVisibility();
 
-    // 解析URL参数
     urlParamsStore.parseUrlParams();
 
-    // 设置rubric选择
     this.setupRubricFromUrl();
 
     usageLogger.init(urlParamsStore.getCurrentParams(), { page: 'WritingIntelligible', modelName: this.modelName })
@@ -584,29 +544,23 @@ export default {
       return 'Low quality';
     },
     setupRubricFromUrl() {
-      // 获取URL中的writingRubric参数
       const urlRubricName = urlParamsStore.urlParams.writingRubric;
 
-      // 等待criteriaOptions准备好
       this.$watch('criteriaOptions', (newOptions) => {
         if (newOptions && newOptions.length > 0) {
           let selectedOption = null;
 
-          // 如果URL中有rubric参数，尝试匹配
           if (urlRubricName) {
             selectedOption = newOptions.find(c => c.label === urlRubricName);
           }
 
-          // 如果没有匹配到或没有URL参数，选择第一个
           if (!selectedOption) {
             selectedOption = newOptions[0];
-            // 更新URL参数为第一个rubric的名称
             if (selectedOption) {
               urlParamsStore.updateUrlParams({ writingRubric: selectedOption.label });
             }
           }
 
-          // 设置选中的rubric
           if (selectedOption) {
             this.selectedCriteria = selectedOption;
           }
@@ -664,6 +618,15 @@ export default {
       }
     },
     async sendContent() {
+      if (!this.selectedRubric?.rubric?.length) {
+        this.$q.notify({
+          type: 'warning',
+          message: 'Please choose a criteria set before assessment.',
+          position: 'top',
+        });
+        return;
+      }
+
       const userWriting = this.writingContent;
       console.log('sendContent', userWriting, this.selectedRubric.rubric);
       this.selectedRubric.rubric.forEach(dimension => {
@@ -866,12 +829,12 @@ export default {
         timestamp: new Date().toLocaleString(),
         scores: scoresDeepCopy,
         counterfactualClicks: counterfactualClicksDeepCopy,
-        rubricName: this.selectedCriteria?.label || 'Unknown Rubric'
+        criteriaName: this.selectedCriteria?.label || 'Unknown Criteria Set'
       };
 
       this.historyRecords.push(newRecord);
       console.log('Saved to history:', newRecord);
-      usageLogger.log('save_history', { rubricName: newRecord.rubricName, scorePct: newRecord.scores?.aiScorePercentage }, { page: 'WritingIntelligible' })
+      usageLogger.log('save_history', { criteriaName: newRecord.criteriaName, scorePct: newRecord.scores?.aiScorePercentage }, { page: 'WritingIntelligible' })
 
       // 清空当前轮次的counterfactual点击记录，准备下一轮
       this.currentCounterfactualClicks = [];
@@ -883,9 +846,8 @@ export default {
       // 清空当前的counterfactual点击记录
       this.currentCounterfactualClicks = [];
 
-      // 如果有对应的rubric，可以尝试恢复rubric选择
-      if (record.rubricName && this.criteriaOptions) {
-        const matchingCriteria = this.criteriaOptions.find(option => option.label === record.rubricName);
+      if (record.criteriaName && this.criteriaOptions) {
+        const matchingCriteria = this.criteriaOptions.find(option => option.label === record.criteriaName);
         if (matchingCriteria) {
           this.selectedCriteria = matchingCriteria;
         }
@@ -942,9 +904,6 @@ export default {
         'deep-orange': '#ff5722'
       };
       return colorMap[colorName] || '#666666';
-    },
-    openCriteriaMaker() {
-      window.open(`https://jackwensen.github.io/diverse-feedback-llm/?task=rubric&condition=intelligible&userid=${this.currentUserId}&rubricRubric=${this.selectedCriteria.label}`, '_blank');
     },
     isCellSelected(dimension, score) {
       // 检查该维度的任何一个criterion在指定score下是否被选中

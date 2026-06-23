@@ -1,8 +1,8 @@
 {
-  "name": "diverse-feedback-llm",
+  "name": "multi-advisor-feedback-issue",
   "version": "1.0.0",
-  "description": "diverse-feedback-llm",
-  "productName": "diverse-feedback-llm",
+  "description": "MARS writing intelligibility prototype",
+  "productName": "MARS Writing Prototype",
   "author": "jingwen Bai",
   "private": true,
   "scripts": {
@@ -17,7 +17,6 @@
     "@quasar/cli": "^2.2.1",
     "@quasar/extras": "^1.16.4",
     "ant-design-vue": "4.x",
-    "axios": "^1.4.0",
     "diff": "^7.0.0",
     "markdown-it": "^14.1.0",
     "marked": "^15.0.12",

@@ -9,7 +9,6 @@
 
         <!-- 显示当前模式信息 -->
         <div class="flex items-center q-gutter-sm">
-          <!-- <div class="text-caption">{{ currentUserId }}</div> -->
         </div>
       </q-toolbar>
     </q-header>
@@ -43,21 +42,7 @@
     <q-page-container>
       <q-tab-panels v-model="selectedModel" animated keep-alive vertical>
         <q-tab-panel v-for="(model) in models" :key="model.id" :name="model.id" style="padding: 1px 0px 8px 0px;">
-          <!-- 根据condition参数显示不同组件 -->
-          <writing-text
-            v-if="currentCondition === 'text'"
-            :modelName="model.name"
-            :criteriaList="criteriaList"
-            :content="model.content"
-          />
-          <writing-rubric
-            v-else-if="currentCondition === 'rubric'"
-            :modelName="model.name"
-            :criteriaList="criteriaList"
-            :content="model.content"
-          />
           <writing-intelligible
-            v-else
             :modelName="model.name"
             :criteriaList="criteriaList"
             :content="model.content"
@@ -69,11 +54,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import WritingText from 'src/pages/Writing/WritingText.vue';
-import WritingRubric from 'src/pages/Writing/WritingRubric.vue';
+import { ref, onMounted } from 'vue';
 import WritingIntelligible from 'src/pages/Writing/WritingIntelligible.vue';
-import { localAPI } from 'boot/axios'
 import { getRubric, getWritingList } from 'src/components/multiAgentWriting.js'
 import urlParamsStore from 'src/store/urlParams.js'
 
@@ -84,10 +66,6 @@ const models = ref([{ id: generateUniqueId(), name: 'Default Writing 1', content
 const selectedModel = ref(models.value[0].id); // 默认选中的决策树模型
 
 const criteriaList = ref([]);
-
-// 获取当前condition和userid
-const currentCondition = computed(() => urlParamsStore.urlParams.condition)
-const currentUserId = computed(() => urlParamsStore.urlParams.userid)
 
 function toggleLeftDrawer () {
   leftDrawerOpen.value = !leftDrawerOpen.value
@@ -127,26 +105,6 @@ function setupWritingFromUrl() {
     const firstWriting = models.value[0];
     urlParamsStore.updateUrlParams({ passage: firstWriting.name });
   }
-}
-
-// 获取模式颜色
-function getModeColor() {
-  const colors = {
-    'intelligible': 'blue',
-    'rubric': 'blue',
-    'text': 'blue'
-  };
-  return colors[currentCondition.value] || 'blue';
-}
-
-// 获取模式标签
-function getModeLabel() {
-  const labels = {
-    'intelligible': 'Intelligible Mode',
-    'rubric': 'Rubric Mode',
-    'text': 'Text Mode'
-  };
-  return labels[currentCondition.value] || 'Unknown Mode';
 }
 
 onMounted(async () => {

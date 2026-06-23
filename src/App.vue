@@ -1,16 +1,16 @@
 <template>
-  <router-view v-slot="{ Component }">
-    <keep-alive>
-      <component :is="Component" />
-    </keep-alive>
-  </router-view>
+  <WritingLayout />
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import WritingLayout from 'src/layouts/WritingLayout.vue'
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  components: {
+    WritingLayout
+  }
 })
 </script>
 <style>

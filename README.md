@@ -1,4 +1,4 @@
-# diverse feedback LLM
+# MARS Writing Prototype
 
 ### Install the dependencies
 
@@ -28,7 +28,6 @@ quasar dev
 ```bash
 VITE_GITHUB_TOKEN=your_github_pat
 VITE_OPENAI_API_KEY=your_openai_api_key
-VITE_BIGMODEL_API_KEY=your_bigmodel_api_key
 ```
 
 也可以在浏览器控制台临时设置：

@@ -95,7 +95,7 @@ module.exports = configure(function (/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      publicPath: 'diverse-feedback-llm',
+      publicPath: 'Multi-Advisor-Feedback-Issue',
       // analyze: true,
       // env: {},
       // rawDefine: {}
@@ -239,7 +239,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'diverse-feedback-llm'
+        appId: 'multi-advisor-feedback-issue'
       }
     },
 
