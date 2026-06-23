@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligible Feedback Framework - Conceptual Diagram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .flow-arrow {
+            position: relative;
+            z-index: 1;
+        }
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid currentColor;
+        }
+    </style>
+</head>
+<body class="bg-white flex items-center justify-center min-h-screen p-4 sm:p-8">
+    <div class="bg-white p-6 sm:p-10 rounded-2xl w-full max-w-6xl">
+        <div class="text-center mb-10">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">A Framework for Intelligible Feedback via Rubric-Based Evaluation and Counterfactual Examples</h1>
+            <p class="text-gray-500 mt-2 text-base sm:text-lg">Conceptual Diagram for CHI Paper Teaser Image</p>
+        </div>
+
+        <svg width="100%" viewBox="0 0 1400 720" xmlns="http://www.w3.org/2000/svg" class="font-sans">
+            <!-- Definitions for markers and filters -->
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                    <polygon points="0 0, 8 3.5, 0 7" fill="#0d9488" />
+                </marker>
+                <marker id="arrow-indigo" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                    <polygon points="0 0, 8 3.5, 0 7" fill="#4f46e5" />
+                </marker>
+                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.1" />
+                </filter>
+            </defs>
+
+            <!-- Top Row: Writing Evaluation -->
+            <g id="writing-evaluation-flow">
+                <text x="700" y="30" font-size="18" font-weight="600" text-anchor="middle" fill="#1f2937">1. LLM-Powered Writing Evaluation</text>
+
+                <!-- A. Writing Artifact (left, top) -->
+                <g transform="translate(64, 120)">
+                    <rect x="0" y="0" width="240" height="240" rx="8" fill="#ffffff" stroke="#d1d5db" filter="url(#shadow)"/>
+                    <text x="120" y="24" font-weight="600" text-anchor="middle" fill="#374151">A. Writing Artifact</text>
+                    <line x1="15" y1="34" x2="225" y2="34" stroke="#e5e7eb"/>
+                    <rect x="20" y="48" width="200" height="8" fill="#e5e7eb" rx="2"/>
+                    <rect x="20" y="64" width="200" height="8" fill="#e5e7eb" rx="2"/>
+                    <rect x="20" y="80" width="170" height="8" fill="#e5e7eb" rx="2"/>
+                    <rect x="20" y="96" width="200" height="8" fill="#e5e7eb" rx="2"/>
+                </g>
+
+                <!-- D. User-Defined Rubric (bottom-left) -->
+                <g transform="translate(56, 416)">
+                    <rect x="0" y="0" width="260" height="200" rx="12" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+                    <text x="130" y="25" font-weight="600" text-anchor="middle" fill="#1e293b">D. User-Defined Rubric</text>
+                    <line x1="15" y1="35" x2="245" y2="35" stroke="#e2e8f0"/>
+                    <!-- Header Row -->
+                    <g transform="translate(10, 45)">
+                        <rect x="0" y="0" width="70" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="35" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">Criterion</text>
+                        <rect x="85" y="0" width="35" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="102.5" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">4</text>
+                        <rect x="125" y="0" width="35" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="142.5" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">3</text>
+                        <rect x="165" y="0" width="35" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="182.5" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">2</text>
+                        <rect x="205" y="0" width="35" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="222.5" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">1</text>
+                    </g>
+                    <!-- Rubric Content -->
+                    <g transform="translate(12, 75)">
+                        <text x="0" y="18" font-size="12" fill="#334155" font-weight="600">Content</text>
+                        <rect x="85" y="5" width="150" height="15" fill="#f1f5f9" rx="2"/>
+                        <line x1="0" y1="30" x2="225" y2="30" stroke="#f1f5f9"/>
+                        <text x="0" y="48" font-size="12" fill="#334155" font-weight="600">Organization</text>
+                        <rect x="85" y="35" width="150" height="15" fill="#f1f5f9" rx="2"/>
+                        <line x1="0" y1="60" x2="225" y2="60" stroke="#f1f5f9"/>
+                        <text x="0" y="78" font-size="12" fill="#334155" font-weight="600">Vocabulary</text>
+                        <rect x="85" y="65" width="150" height="15" fill="#f1f5f9" rx="2"/>
+                        <line x1="0" y1="90" x2="225" y2="90" stroke="#f1f5f9"/>
+                        <text x="0" y="108" font-size="12" fill="#334155" font-weight="600">Language Use</text>
+                        <rect x="85" y="95" width="150" height="15" fill="#f1f5f9" rx="2"/>
+                    </g>
+                </g>
+
+                <!-- B. Interactive Writing Evaluation (center, top) -->
+                <g transform="translate(400, 120)">
+                    <rect x="0" y="0" width="450" height="240" rx="12" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+                    <text x="225" y="25" font-weight="600" text-anchor="middle" fill="#1e293b">B. Interactive Writing Evaluation</text>
+                    <line x1="15" y1="35" x2="435" y2="35" stroke="#e2e8f0"/>
+                    <!-- Header Row -->
+                    <g transform="translate(20, 45)">
+                        <rect x="0" y="0" width="130" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">Criteria</text>
+                        <rect x="135" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="167.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">4</text>
+                        <rect x="205" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="237.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">3</text>
+                        <rect x="275" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="307.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">2</text>
+                        <rect x="345" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="377.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">1</text>
+                    </g>
+                    <!-- Rubric Bars -->
+                    <g transform="translate(20, 80)">
+                        <g class="criterion-row" transform="translate(0, 0)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#e0f2fe"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#0c4a6e">Content</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#cffafe" stroke="#22d3ee" stroke-width="2"/>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                        </g>
+                        <g class="criterion-row" transform="translate(0, 35)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#e0f2fe"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#0c4a6e">Organization</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#cffafe" stroke="#22d3ee" stroke-width="2"/>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                        </g>
+                        <g class="criterion-row" transform="translate(0, 70)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#e0f2fe"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#0c4a6e">Vocabulary</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#cffafe" stroke="#22d3ee" stroke-width="2"/>
+                        </g>
+                        <g class="criterion-row" transform="translate(0, 105)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#e0f2fe"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#0c4a6e">Language Use</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#cffafe" stroke="#22d3ee" stroke-width="2"/>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                        </g>
+                    </g>
+                    <!-- Popups -->
+                    <!-- Popup: Why (smaller) -->
+                    <g transform="translate(328, 115)">
+                       <path d="M 0 0 L -6 -6 L 6 -6 Z" fill="#ecfdf5" stroke="#22c55e"/>
+                       <rect x="-60" y="-30" width="120" height="25" rx="4" fill="#ecfdf5" stroke="#22c55e"/>
+                       <text x="0" y="-13" text-anchor="middle" font-size="12" fill="#15803d" font-weight="600">Why this score?</text>
+                    </g>
+                    <!-- Popup: Why-not + Get Example (smaller) -->
+                    <g transform="translate(188, 145)">
+                       <path d="M 0 0 L -6 6 L 6 6 Z" fill="#fffbeb" stroke="#f59e0b"/>
+                       <rect x="-90" y="6" width="180" height="40" rx="4" fill="#fffbeb" stroke="#f59e0b"/>
+                       <text x="0" y="20" text-anchor="middle" font-size="12" fill="#b45309" font-weight="600">Why not this score?</text>
+                       <rect x="-70" y="24" width="140" height="18" rx="3" fill="#f97316"/>
+                       <text x="0" y="37" text-anchor="middle" font-size="10" fill="white" font-weight="600">Get Example for Score '4'</text>
+                    </g>
+                </g>
+
+                <!-- Connect A to B -->
+                <path d="M 304 150 H 400" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)"/>
+                <text x="348" y="140" text-anchor="middle" font-size="12" fill="#0d9488" font-weight="600">Assessed in B</text>
+
+                <!-- Connect D to B -->
+                <path d="M 196 416 C 280 360, 360 380, 400 300" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)"/>
+                <text x="338" y="390" text-anchor="middle" font-size="12" fill="#0d9488" font-weight="600">Applied in B</text>
+
+                <!-- C to D -->
+                <path d="M 850 180 H 920" stroke="#0d9488" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)"/>
+                <text x="885" y="170" text-anchor="middle" font-size="12" fill="#0d9488" font-weight="600">Suggests</text>
+
+                <!-- C. Writing Counterfactual (right, top) -->
+                <g transform="translate(920, 120)">
+                    <rect x="0" y="0" width="350" height="240" rx="12" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+                    <text x="175" y="25" font-weight="600" text-anchor="middle" fill="#1e293b">C. Writing Counterfactual</text>
+                    <line x1="15" y1="35" x2="335" y2="35" stroke="#e2e8f0"/>
+                    <text x="20" y="55" font-size="12" fill="#475569" font-weight="550"><tspan font-weight="600">Criterion:</tspan> Vocabulary</text>
+                    <text x="20" y="70" font-size="12" fill="#475569"><tspan font-weight="600">Original:</tspan> Score 1 → <tspan font-weight="600">Target:</tspan> Score 4</text>
+                    <foreignObject x="20" y="85" width="310" height="140">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px; color:#334155; padding: 8px; border-radius: 6px; line-height: 1.5; border: 1px solid #f1f5f9; background-color: #f8fafc">
+                           <p>The method is <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">good</del>. It <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">fixes</del> problems with other models. <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">This novel approach</span> <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">addresses the critical limitations</span> of existing models. By <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">adding</del> <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">integrating</span> the object detector, we can <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">find</del> <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">accurately determine</span> object positions......</p>
+                        </div>
+                    </foreignObject>
+                </g>
+
+                <!-- Top-loop Revision: D (mid-top) -> A (mid-top) -->
+                <path d="M 1095 120 H 1095 Q 1095 120 1095 120 V 80 Q 1095 80 1075 80 H 195 Q 195 80 185 80 V 120" stroke="#0d9488" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead)" stroke-linejoin="round" stroke-linecap="round"/>
+                <g transform="translate(560, 50)">
+                    <rect x="0" y="0" width="200" height="25" rx="6" fill="#ccfbf1"/>
+                    <text x="100" y="17" text-anchor="middle" font-size="12" fill="#134e4a" font-weight="600">Informs Writing Revision</text>
+                </g>
+            </g>
+
+            <!-- Separator Line -->
+            <line x1="80" y1="370" x2="1320" y2="370" stroke="#d1d5db" stroke-dasharray="5,5"/>
+
+            <!-- Bottom Row: Meta-Evaluation of the Rubric -->
+            <g id="rubric-evaluation-flow">
+                <text x="700" y="400" font-size="18" font-weight="600" text-anchor="middle" fill="#1f2937">2. LLM-Powered Meta-Evaluation (of the Rubric)</text>
+
+                <!-- E. Interactive Meta-Evaluation (center, bottom) -->
+                <g transform="translate(400, 420)">
+                    <rect x="0" y="0" width="450" height="196" rx="12" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+                    <text x="225" y="25" font-weight="600" text-anchor="middle" fill="#1e293b">E. Interactive Meta-Evaluation</text>
+                    <line x1="15" y1="35" x2="435" y2="35" stroke="#e2e8f0"/>
+                    <!-- Header Row -->
+                    <g transform="translate(20, 45)">
+                        <rect x="0" y="0" width="130" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">Criteria</text>
+                        <rect x="135" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="167.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">4</text>
+                        <rect x="205" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="237.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">3</text>
+                        <rect x="275" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="307.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">2</text>
+                        <rect x="345" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                        <text x="377.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">1</text>
+                    </g>
+                    <!-- Rubric Bars -->
+                    <g transform="translate(20, 80)">
+                        <g class="criterion-row" transform="translate(0, 0)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#eef2ff"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#312e81">Level Distinction</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#c7d2fe" stroke="#6366f1" stroke-width="2"/>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                        </g>
+                        <g class="criterion-row" transform="translate(0, 35)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#eef2ff"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#312e81">Descriptive Lang.</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#c7d2fe" stroke="#6366f1" stroke-width="2"/>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                        </g>
+                        <g class="criterion-row" transform="translate(0, 70)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#eef2ff"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#312e81">Criteria Alignment</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#c7d2fe" stroke="#6366f1" stroke-width="2"/>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                        </g>
+                    </g>
+                    <!-- Popups for Meta -->
+                    <g transform="translate(325, 110)">
+                       <path d="M 0 0 L -6 -6 L 6 -6 Z" fill="#ecfdf5" stroke="#22c55e"/>
+                       <rect x="-60" y="-30" width="120" height="25" rx="4" fill="#ecfdf5" stroke="#22c55e"/>
+                       <text x="0" y="-13" text-anchor="middle" font-size="12" fill="#15803d" font-weight="600" >Why this score?</text>
+                    </g>
+                    <g transform="translate(190, 110)">
+                       <path d="M 0 0 L -6 6 L 6 6 Z" fill="#fffbeb" stroke="#f59e0b"/>
+                       <rect x="-90" y="6" width="180" height="40" rx="4" fill="#fffbeb" stroke="#f59e0b"/>
+                       <text x="0" y="20" text-anchor="middle" font-size="12" fill="#b45309" font-weight="600">Why not this score?</text>
+                       <rect x="-70" y="24" width="140" height="18" rx="3" fill="#f97316"/>
+                       <text x="0" y="37" text-anchor="middle" font-size="10" fill="white" font-weight="600">Get Example for Score '4'</text>
+                    </g>
+                </g>
+
+                <!-- Connect B to F -->
+                <path d="M 316 550 H 400" stroke="#4f46e5" stroke-width="2.5" fill="none" marker-end="url(#arrow-indigo)"/>
+                <text x="358" y="530" text-anchor="middle" font-size="12" fill="#4f46e5" font-weight="600">Assessed in E</text>
+
+                <!-- F to G -->
+                <path d="M 850 548 H 920" stroke="#4f46e5" stroke-width="2.5" fill="none" marker-end="url(#arrow-indigo)"/>
+                <text x="885" y="538" font-size="12" fill="#4f46e5" text-anchor="middle" font-weight="600">Suggests</text>
+
+                <!-- F. Rubric Counterfactual (right, bottom) -->
+                <g transform="translate(920, 420)">
+                    <rect x="0" y="0" width="350" height="192" rx="12" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+                    <text x="175" y="25" font-weight="600" text-anchor="middle" fill="#1e293b">F. Suggested Rubric Example</text>
+                    <line x1="15" y1="35" x2="335" y2="35" stroke="#e2e8f0"/>
+                    <text x="20" y="55" font-size="12" fill="#475569" font-weight="550"><tspan font-weight="600">Criterion:</tspan> Level Distinction</text>
+                    <text x="20" y="70" font-size="12" fill="#475569"><tspan font-weight="600">Original:</tspan> Score 3 → <tspan font-weight="600">Target:</tspan> Score 4</text>
+                    <!-- Rubric Table (AI-Enhanced Version) -->
+                    <g transform="translate(12, 85)">
+                        <!-- Header Row -->
+                        <rect x="0" y="0" width="70" height="25" rx="4" fill="#f1f5f9"/>
+                        <text x="35" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">Criterion</text>
+                        <rect x="78" y="0" width="60" height="25" rx="4" fill="#ecfdf5"/>
+                        <text x="108" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#059669">4</text>
+                        <rect x="143" y="0" width="60" height="25" rx="4" fill="#eef2ff"/>
+                        <text x="173" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#4338ca">3</text>
+                        <rect x="208" y="0" width="60" height="25" rx="4" fill="#fef3c7"/>
+                        <text x="238" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#d97706">2</text>
+                        <rect x="273" y="0" width="60" height="25" rx="4" fill="#fee2e2"/>
+                        <text x="303" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#dc2626">1</text>
+
+                        <!-- Content Row -->
+                        <text x="0" y="48" font-size="12" fill="#334155" font-weight="600">Content</text>
+                        <rect x="78" y="30" width="60" height="20" fill="#d1fae5" rx="2"/>
+                        <foreignObject x="80" y="33" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 9px; line-height: 1.1; color:#059669; text-align: center; font-weight: 500;">Exceptional...</div>
+                        </foreignObject>
+                        <rect x="143" y="30" width="60" height="20" fill="#ddd6fe" rx="2"/>
+                        <foreignObject x="142" y="33" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 9px; line-height: 1.1; color:#4338ca; text-align: center; font-weight: 500;">Clear...</div>
+                        </foreignObject>
+                        <rect x="208" y="30" width="60" height="20" fill="#fde68a" rx="2"/>
+                        <foreignObject x="207" y="33" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 9px; line-height: 1.1; color:#d97706; text-align: center; font-weight: 500;">Basic...</div>
+                        </foreignObject>
+                        <rect x="273" y="30" width="60" height="20" fill="#fecaca" rx="2"/>
+                        <foreignObject x="272" y="33" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 9px; line-height: 1.1; color:#dc2626; text-align: center; font-weight: 500;">Minimal...</div>
+                        </foreignObject>
+                        <line x1="0" y1="55" x2="330" y2="55" stroke="#f1f5f9"/>
+
+                        <!-- Organization Row -->
+                        <text x="0" y="73" font-size="12" fill="#334155" font-weight="600">Organization</text>
+                        <rect x="78" y="55" width="60" height="20" fill="#d1fae5" rx="2"/>
+                        <foreignObject x="77" y="58" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 9px; line-height: 1.1; color:#059669; text-align: center; font-weight: 500;">Logical flow</div>
+                        </foreignObject>
+                        <rect x="143" y="55" width="60" height="20" fill="#ddd6fe" rx="2"/>
+                        <foreignObject x="142" y="58" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 9px; line-height: 1.1; color:#4338ca; text-align: center; font-weight: 500;">Some...</div>
+                        </foreignObject>
+                        <rect x="208" y="55" width="60" height="20" fill="#fde68a" rx="2"/>
+                        <foreignObject x="207" y="58" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 9px; line-height: 1.1; color:#d97706; text-align: center; font-weight: 500;">Basic...</div>
+                        </foreignObject>
+                        <rect x="273" y="55" width="60" height="20" fill="#fecaca" rx="2"/>
+                        <foreignObject x="272" y="58" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 9px; line-height: 1.1; color:#dc2626; text-align: center; font-weight: 500;">Poor...</div>
+                        </foreignObject>
+                        <line x1="0" y1="80" x2="330" y2="80" stroke="#f1f5f9"/>
+
+                        <!-- More indicators -->
+                        <text x="35" y="98" font-size="12" fill="#94a3b8" font-weight="400" text-anchor="middle">⋮</text>
+                        <rect x="78" y="85" width="60" height="15" fill="#f8fafc" rx="2"/>
+                        <text x="108" y="95" font-size="10" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                        <rect x="143" y="85" width="60" height="15" fill="#f8fafc" rx="2"/>
+                        <text x="173" y="95" font-size="10" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                        <rect x="208" y="85" width="60" height="15" fill="#f8fafc" rx="2"/>
+                        <text x="238" y="95" font-size="10" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                        <rect x="273" y="85" width="60" height="15" fill="#f8fafc" rx="2"/>
+                        <text x="303" y="95" font-size="10" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                    </g>
+                </g>
+
+                <!-- Bottom-loop Refinement: G (mid-bottom) -> B (mid-bottom) -->
+                <path d="M 1095 614 Q 1095 614 1095 614 V 640 Q 1085 640 1085 640 H 195 Q 185 640 185 640 V 616" stroke="#4f46e5" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrow-indigo)" stroke-linejoin="round" stroke-linecap="round"/>
+                <g transform="translate(560, 645)">
+                    <rect x="0" y="0" width="200" height="25" rx="6" fill="#e0e7ff"/>
+                    <text x="100" y="17" text-anchor="middle" font-size="12" fill="#3730a3" font-weight="600">Informs Rubric Revision</text>
+                </g>
+            </g>
+
+            <!-- Bottom caption row -->
+            <g transform="translate(50, 700)">
+                <text x="115" y="0" font-size="14" font-weight="600" fill="#374151">User Artifacts</text>
+                <text x="505" y="0" font-size="14" font-weight="600" fill="#374151">Interactive Evaluation</text>
+                <text x="955" y="0" font-size="14" font-weight="600" fill="#374151">Suggested Examples</text>
+            </g>
+
+        </svg>
+
+    </div>
+</body>
+</html>

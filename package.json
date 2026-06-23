@@ -1,0 +1,58 @@
+{
+  "name": "diverse-feedback-llm",
+  "version": "1.0.0",
+  "description": "diverse-feedback-llm",
+  "productName": "diverse-feedback-llm",
+  "author": "jingwen Bai",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js,.vue ./",
+    "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "test": "quasar serve",
+    "dev": "quasar dev",
+    "build": "quasar build",
+    "deploy": "gh-pages -d dist/spa"
+  },
+  "dependencies": {
+    "@quasar/cli": "^2.2.1",
+    "@quasar/extras": "^1.16.4",
+    "ant-design-vue": "4.x",
+    "axios": "^1.4.0",
+    "diff": "^7.0.0",
+    "markdown-it": "^14.1.0",
+    "marked": "^15.0.12",
+    "openai": "^4.68.2",
+    "papaparse": "^5.4.1",
+    "quasar": "^2.6.0",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0",
+    "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^1.8.0",
+    "autoprefixer": "^10.4.2",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "gh-pages": "^6.1.1",
+    "postcss": "^8.4.14",
+    "prettier": "^2.5.1",
+    "worker-loader": "^3.0.8"
+  },
+  "engines": {
+    "node": "^18 || ^16 || ^20",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 6 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ]
+}

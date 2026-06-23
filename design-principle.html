@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligible Feedback Framework - Design Principles Diagram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        .flow-arrow {
+            position: relative;
+            z-index: 1;
+        }
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100vw; height: 100vh; margin: 0; padding: 0;">
+    <svg width="100%" height="100%" viewBox="0 0 980 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" preserveAspectRatio="xMidYMid meet">
+        <!-- 背景装饰图案 -->
+        <defs>
+            <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                <circle cx="20" cy="20" r="1.5" fill="#e2e8f0" opacity="0.3"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dots)"/>
+        <!-- SVG Linear Design Principle Diagram for iRULER -->
+        <!-- Author: AI Assistant for Jingwen Bai -->
+        <!-- Date: 2025 -->
+        <defs>
+            <!-- 更精致的渐变定义 -->
+            <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#4f80e7;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+            </linearGradient>
+
+            <marker id="arrow-marker" markerWidth="8" markerHeight="6" refX="6" refY="2.5" orient="auto">
+                <polygon points="0 0, 6 2.5, 0 5" fill="#1e40af"/>
+            </marker>
+            <marker id="cycle-arrow" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto">
+                <path d="M 1.5 1.5 L 5 4 M 1.8 5.5 L 5 4" stroke="#ffffff" stroke-width="1" fill="none" stroke-linecap="round"/>
+            </marker>
+            <filter id="card-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="3" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.12" />
+            </filter>
+            <style>
+                .principle-label { font-size: 18px; font-weight: 700; fill: #ffffff; }
+                .principle-title { font-size: 14px; font-weight: 600; fill: #ffffff; }
+                .principle-desc { font-size: 12px; fill: #1f2937; font-weight: 500; }
+                .keyword { font-size: 12px; font-weight: 600; fill: #ffffff; }
+                .arrow { stroke: #1e40af; stroke-width: 3.5; fill: none; marker-end: url(#arrow-marker); stroke-linecap: round; }
+            </style>
+        </defs>
+
+        <!-- DP1: Grounding Feedback -->
+        <g id="Principle1" transform="translate(20, 50)">
+            <rect x="0" y="0" width="200" height="180" rx="12" fill="url(#blueGradient)" stroke="#1e40af" stroke-width="2.5" filter="url(#card-shadow)"/>
+            <text x="100" y="25" text-anchor="middle" class="principle-label">DP1</text>
+            <text x="100" y="45" text-anchor="middle" class="principle-title">Ground Feedback in Rubrics</text>
+            <line x1="15" y1="55" x2="185" y2="55" stroke="rgba(255,255,255,0.3)"/>
+            <!-- Icon for Rubric -->
+            <g transform="translate(30, 63)">
+                <rect x="0" y="0" width="140" height="70" rx="8" fill="rgba(255,255,255,0.95)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                <rect x="8" y="8" width="28" height="8" fill="#1e40af" rx="2"/>
+                <rect x="40" y="8" width="92" height="8" fill="#3b82f6" rx="2"/>
+                <line x1="8" y1="22" x2="132" y2="22" stroke="rgba(30,64,175,0.2)"/>
+                <rect x="8" y="26" width="124" height="8" fill="rgba(59,130,246,0.15)" rx="2"/>
+                <rect x="8" y="36" width="124" height="8" fill="rgba(59,130,246,0.15)" rx="2"/>
+                <rect x="8" y="46" width="124" height="8" fill="rgba(59,130,246,0.15)" rx="2"/>
+                <rect x="8" y="56" width="124" height="8" fill="rgba(59,130,246,0.15)" rx="2"/>
+            </g>
+            <text x="100" y="149" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">Establishes a shared</text>
+            <text x="100" y="165" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">frame of reference.</text>
+        </g>
+
+        <!-- Arrow 1 -> 2 -->
+        <path d="M 222 140 H 262" class="arrow" opacity="0.9"/>
+
+        <!-- DP2: Structuring Dialogue -->
+        <g id="Principle2" transform="translate(260, 50)">
+            <rect x="0" y="0" width="200" height="180" rx="12" fill="url(#redGradient)" stroke="#b91c1c" stroke-width="2.5" filter="url(#card-shadow)"/>
+            <text x="100" y="25" text-anchor="middle" class="principle-label">DP2</text>
+            <text x="100" y="45" text-anchor="middle" class="principle-title">Scaffolding Intelligibility</text>
+            <line x1="15" y1="55" x2="185" y2="55" stroke="rgba(255,255,255,0.3)"/>
+            <!-- Icon for Dialogue -->
+            <g transform="translate(20, 65)">
+                <rect x="0" y="0" width="160" height="22" rx="11" fill="rgba(255,255,255,0.95)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                <text x="80" y="15" text-anchor="middle" font-size="13" font-weight="600" fill="#b91c1c">Why? / Why Not?</text>
+                <path d="M 80 22 V 28" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/>
+                <rect x="0" y="28" width="160" height="22" rx="11" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                <text x="80" y="43" text-anchor="middle" font-size="13" font-weight="600" fill="#9b1717">How-to</text>
+            </g>
+            <text x="100" y="135" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">Scaffolding intelligibility</text>
+            <text x="100" y="150" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">through diagnostic &</text>
+            <text x="100" y="165" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">prescriptive feedback.</text>
+        </g>
+
+        <!-- Arrow 2 -> 3 -->
+        <path d="M 463 140 H 502" class="arrow" opacity="0.9"/>
+
+        <!-- DP3: Applying Recursively -->
+        <g id="Principle3" transform="translate(500, 50)">
+            <rect x="0" y="0" width="200" height="180" rx="12" fill="url(#orangeGradient)" stroke="#c2410c" stroke-width="2.5" filter="url(#card-shadow)"/>
+            <text x="100" y="25" text-anchor="middle" class="principle-label">DP3</text>
+            <text x="100" y="45" text-anchor="middle" class="principle-title">Apply Recursively</text>
+            <line x1="15" y1="55" x2="185" y2="55" stroke="rgba(255,255,255,0.3)"/>
+            <!-- Icon for Recursion -->
+            <g transform="translate(30, 65)">
+                <rect x="0" y="0" width="140" height="28" rx="8" fill="rgba(255,255,255,0.95)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                <text x="70" y="19" text-anchor="middle" font-size="12.5" font-weight="700" fill="#c2410c">Object-Level (Writing)</text>
+
+                <rect x="0" y="32" width="140" height="28" rx="8" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                <text x="70" y="51" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ea580c">Meta-Level (Rubric)</text>
+
+                <!-- Cycle arrow from Meta-Level to Object-Level -->
+                <path d="M 140 46 A 15 15 0 0 0 140 15"
+                      stroke="rgba(255,255,255,1)" stroke-width="2.5" fill="none" marker-end="url(#cycle-arrow)" stroke-linecap="round"/>
+            </g>
+            <text x="100" y="148" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">Extends feedback to both</text>
+            <text x="100" y="165" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">the artifact and its criteria.</text>
+        </g>
+
+        <!-- Arrow 3 -> 4 -->
+        <path d="M 703 140 H 742" class="arrow" opacity="0.9"/>
+
+        <!-- DP4: Consolidating in Panel -->
+        <g id="Principle4" transform="translate(740, 50)">
+            <rect x="0" y="0" width="220" height="180" rx="12" fill="url(#greenGradient)" stroke="#047857" stroke-width="2.5" filter="url(#card-shadow)"/>
+            <text x="110" y="25" text-anchor="middle" class="principle-label">DP4</text>
+            <text x="110" y="45" text-anchor="middle" class="principle-title">Consolidate in a Unified Panel</text>
+            <line x1="15" y1="55" x2="205" y2="55" stroke="rgba(255,255,255,0.3)"/>
+            <!-- Icon for Unified Panel -->
+            <g transform="translate(25, 63)">
+                <rect x="0" y="0" width="170" height="70" rx="8" fill="rgba(255,255,255,0.95)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                <rect x="8" y="5" width="154" height="18" fill="#047857" rx="4"/>
+                <text x="85" y="18" text-anchor="middle" font-size="12" font-weight="600" fill="#ffffff">Unified Feedback Panel</text>
+                <rect x="12" y="28" width="146" height="16" fill="rgba(5,150,105,0.25)" rx="4"/>
+                <text x="85" y="39" text-anchor="middle" font-size="11" font-weight="600" fill="#047857">Writing Evaluation</text>
+                <rect x="12" y="48" width="146" height="16" fill="rgba(5,150,105,0.25)" rx="4"/>
+                <text x="85" y="59" text-anchor="middle" font-size="11" font-weight="600" fill="#047857">Rubric Evaluation</text>
+            </g>
+            <text x="110" y="149" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">Ensures consistency and</text>
+            <text x="110" y="165" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="600">reduces cognitive load.</text>
+        </g>
+    </svg>
+
+
+    </div>
+</body>
+</html>

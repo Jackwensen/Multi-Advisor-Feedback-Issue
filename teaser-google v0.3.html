@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligible Feedback Framework - Conceptual Diagram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .flow-arrow {
+            position: relative;
+            z-index: 1;
+        }
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid currentColor;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="w-full h-screen">
+
+        <svg width="100%" height="100%" viewBox="0 0 1600 720" xmlns="http://www.w3.org/2000/svg" class="font-sans" preserveAspectRatio="xMidYMid meet">
+            <!-- Definitions for markers and filters -->
+            <defs>
+                <marker id="arrowhead" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                    <polygon points="0 0, 6 2.5, 0 5" fill="#1976D2" />
+                </marker>
+                <marker id="arrowhead-start" markerWidth="6" markerHeight="5" refX="0.5" refY="2.5" orient="auto">
+                  <polygon points="6 0, 0 2.5, 6 5" fill="#1976D2" />
+                </marker>
+                <marker id="arrow-indigo" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                    <polygon points="0 0, 6 2.5, 0 5" fill="#7e57c2" />
+                </marker>
+                <marker id="arrow-black" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                    <polygon points="0 0, 6 2.5, 0 5" fill="#000000" />
+                </marker>
+                <marker id="arrowhead-small" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                    <polygon points="0 0, 6 2.5, 0 5" fill="#1976D2" />
+                </marker>
+                <marker id="arrow-indigo-small" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                    <polygon points="0 0, 6 2.5, 0 5" fill="#7e57c2" />
+                </marker>
+                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.1" />
+                </filter>
+            </defs>
+
+            <!-- Top Row: Writing Evaluation -->
+            <g id="writing-evaluation-flow">
+                <!-- <text x="780" y="64" font-size="18" font-weight="600" text-anchor="middle" fill="#1f2937">1. LLM-Assisted Writing Evaluation</text> -->
+
+                <!-- A. Writing Artifact (left, top) -->
+                <g transform="translate(64, 120)">
+                    <rect x="0" y="0" width="240" height="240" rx="8" fill="#ffffff" stroke="#64748b"/>
+                    <!-- A圆形背景 -->
+                    <circle cx="42" cy="19" r="12" fill="#000000"/>
+                    <text x="42" y="24" font-weight="600" text-anchor="middle" fill="#ffffff" font-size="14">A</text>
+                    <text x="60" y="24" font-weight="600" text-anchor="start" fill="#374151">Writing Artifact</text>
+                    <line x1="15" y1="34" x2="225" y2="34" stroke="#e5e7eb"/>
+                    <rect x="20" y="48" width="200" height="8" fill="#e5e7eb" rx="2"/>
+                    <rect x="20" y="64" width="200" height="8" fill="#e5e7eb" rx="2"/>
+                    <rect x="20" y="80" width="170" height="8" fill="#e5e7eb" rx="2"/>
+                    <rect x="20" y="96" width="200" height="8" fill="#e5e7eb" rx="2"/>
+                </g>
+
+                <!-- B. User-Defined Rubric (bottom-left) -->
+                <g transform="translate(56, 416)">
+                    <rect x="0" y="0" width="256" height="200" rx="12" fill="#ffffff" stroke="#64748b"/>
+                    <!-- B圆形背景 -->
+                    <circle cx="40" cy="19" r="12" fill="#000000"/>
+                    <text x="40" y="24" font-weight="600" text-anchor="middle" fill="#ffffff" font-size="14">B</text>
+                    <text x="60" y="25" font-weight="600" text-anchor="start" fill="#1e293b">User-Defined Rubric</text>
+                    <line x1="15" y1="35" x2="245" y2="35" stroke="#e2e8f0"/>
+                    <!-- Header Row -->
+                    <g transform="translate(10, 45)">
+                        <rect x="0" y="0" width="70" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="35" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">Criterion</text>
+                        <rect x="85" y="0" width="35" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="102.5" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">4</text>
+                        <rect x="125" y="0" width="35" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="142.5" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">3</text>
+                        <rect x="165" y="0" width="35" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="182.5" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">2</text>
+                        <rect x="205" y="0" width="35" height="25" rx="4" fill="#f8fafc"/>
+                        <text x="222.5" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">1</text>
+                    </g>
+                    <!-- Rubric Content -->
+                    <g transform="translate(12, 75)">
+                        <text x="0" y="18" font-size="12" fill="#334155" font-weight="600">Content</text>
+                        <rect x="85" y="5" width="150" height="15" fill="#f1f5f9" rx="2"/>
+                        <line x1="0" y1="30" x2="225" y2="30" stroke="#f1f5f9"/>
+                        <text x="0" y="48" font-size="12" fill="#334155" font-weight="600">Organization</text>
+                        <rect x="85" y="35" width="150" height="15" fill="#f1f5f9" rx="2"/>
+                        <line x1="0" y1="60" x2="225" y2="60" stroke="#f1f5f9"/>
+                        <text x="0" y="78" font-size="12" fill="#334155" font-weight="600">Vocabulary</text>
+                        <rect x="85" y="65" width="150" height="15" fill="#f1f5f9" rx="2"/>
+                        <line x1="0" y1="90" x2="225" y2="90" stroke="#f1f5f9"/>
+                        <text x="0" y="108" font-size="12" fill="#334155" font-weight="600">Language Use</text>
+                        <rect x="85" y="95" width="150" height="15" fill="#f1f5f9" rx="2"/>
+                    </g>
+                    <!-- Bottom-right tag for B -->
+                    <!-- <g transform="translate(0, 0)">
+                        <rect x="208" y="185" width="104" height="34" rx="9" fill="#f1ecf8" stroke="#7e57c2"/>
+                        <text x="278" y="194" font-size="12" fill="#593696" font-weight="600" text-anchor="middle">
+                            <tspan x="260" dy="4">Qualified</tspan>
+                            <tspan x="260" dy="16">by meta-rubric</tspan>
+                        </text>
+                    </g> -->
+                </g>
+
+                <!-- C. The iRULER Interactive Evaluation Panel (combined B and E) -->
+                <g transform="translate(400, 120)">
+                    <!-- Outer unified frame -->
+                    <rect x="0" y="0" width="450" height="496" rx="12" fill="#ffffff" stroke="#64748b" stroke-width="2"/>
+
+                    <!-- C圆形背景 -->
+                    <circle cx="40" cy="19" r="12" fill="#000000"/>
+                    <text x="40" y="24" font-weight="600" text-anchor="middle" fill="#ffffff" font-size="14">C</text>
+                    <text x="60" y="25" font-weight="600" text-anchor="start" fill="#1e293b">The iRULER Interactive Evaluation Panel</text>
+                    <line x1="15" y1="35" x2="435" y2="35" stroke="#e2e8f0"/>
+
+                    <!-- Writing Evaluation Section -->
+                    <g transform="translate(10, 40)">
+                        <!-- C.1圆形背景 -->
+                        <circle cx="124" cy="9" r="12" fill="#000000"/>
+                        <text x="124" y="14" font-weight="600" text-anchor="middle" fill="#ffffff" font-size="12">C.1</text>
+                        <!-- Section title -->
+                        <text x="215" y="15" text-anchor="middle" font-weight="600" font-size="15" fill="#1e293b">Writing Evaluation</text>
+                        <line x1="0" y1="24" x2="430" y2="24" stroke="#e2e8f0"/>
+
+                        <!-- Header Row -->
+                        <g transform="translate(10, 30)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">Criteria</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="167.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">4</text>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="237.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">3</text>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="307.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">2</text>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="377.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">1</text>
+                        </g>
+                        <!-- Rubric Bars -->
+                        <g transform="translate(10, 65)">
+                            <g class="criterion-row" transform="translate(0, 0)">
+                                <rect x="0" y="0" width="130" height="30" rx="6" fill="#d2e5f9"/>
+                                <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#135aa0">Content</text>
+                                <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="205" y="0" width="65" height="30" rx="6" fill="#e9f2fc" stroke="#1976D2" stroke-width="2"/>
+                                <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            </g>
+                            <g class="criterion-row" transform="translate(0, 35)">
+                                <rect x="0" y="0" width="130" height="30" rx="6" fill="#d2e5f9"/>
+                                <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#135aa0">Organization</text>
+                                <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="205" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="275" y="0" width="65" height="30" rx="6" fill="#e9f2fc" stroke="#1976D2" stroke-width="2"/>
+                                <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            </g>
+                            <g class="criterion-row" transform="translate(0, 70)">
+                                <rect x="0" y="0" width="130" height="30" rx="6" fill="#d2e5f9"/>
+                                <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#135aa0">Vocabulary</text>
+                                <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="205" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="345" y="0" width="65" height="30" rx="6" fill="#e9f2fc" stroke="#1976D2" stroke-width="2"/>
+                            </g>
+                            <g class="criterion-row" transform="translate(0, 105)">
+                                <rect x="0" y="0" width="130" height="30" rx="6" fill="#d2e5f9"/>
+                                <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#135aa0">Language Use</text>
+                                <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="205" y="0" width="65" height="30" rx="6" fill="#e9f2fc" stroke="#1976D2" stroke-width="2"/>
+                                <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            </g>
+                            <text x="215" y="156" text-anchor="middle" font-weight="600" font-size="14" fill="#566376">User-Defined Rubric</text>
+                      </g>
+                    </g>
+
+                    <!-- Separator line -->
+                    <!-- <line x1="20" y1="260" x2="430" y2="260" stroke="#d1d5db" stroke-dasharray="3,3"/> -->
+
+                    <!-- Meta-Evaluation Section -->
+                    <g transform="translate(10, 294)">
+                        <!-- C.2圆形背景 -->
+                        <circle cx="124" cy="9" r="12" fill="#000000"/>
+                        <text x="124" y="14" font-weight="600" text-anchor="middle" fill="#ffffff" font-size="12">C.2</text>
+                        <!-- Section title -->
+                        <text x="215" y="15" text-anchor="middle" font-weight="600" font-size="15" fill="#1e293b">Rubric Evaluation</text>
+                        <line x1="0" y1="24" x2="430" y2="24" stroke="#e2e8f0"/>
+
+                        <!-- Header Row -->
+                        <g transform="translate(10, 30)">
+                            <rect x="0" y="0" width="130" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">Criteria</text>
+                            <rect x="135" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="167.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">4</text>
+                            <rect x="205" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="237.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">3</text>
+                            <rect x="275" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="307.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">2</text>
+                            <rect x="345" y="0" width="65" height="30" rx="6" fill="#f8fafc"/>
+                            <text x="377.5" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#64748b">1</text>
+                        </g>
+                        <!-- Rubric Bars -->
+                        <g transform="translate(10, 65)">
+                            <g class="criterion-row" transform="translate(0, 0)">
+                                <rect x="0" y="0" width="130" height="30" rx="6" fill="#e2d9f2"/>
+                                <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#593696">Criteria Alignment</text>
+                                <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="205" y="0" width="65" height="30" rx="6" fill="#f1ecf8" stroke="#7e57c2" stroke-width="2"/>
+                                <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            </g>
+                            <g class="criterion-row" transform="translate(0, 35)">
+                                <rect x="0" y="0" width="130" height="30" rx="6" fill="#e2d9f2"/>
+                                <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#593696 ">Level Distinction</text>
+                                <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="205" y="0" width="65" height="30" rx="6" fill="#f1ecf8" stroke="#7e57c2" stroke-width="2"/>
+                                <rect x="275" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            </g>
+                            <g class="criterion-row" transform="translate(0, 70)">
+                                <rect x="0" y="0" width="130" height="30" rx="6" fill="#e2d9f2"/>
+                                <text x="65" y="20" text-anchor="middle" font-weight="600" font-size="13" fill="#593696 ">Descriptive Lang.</text>
+                                <rect x="135" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="205" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                                <rect x="275" y="0" width="65" height="30" rx="6" fill="#f1ecf8" stroke="#7e57c2" stroke-width="2"/>
+                                <rect x="345" y="0" width="65" height="30" rx="6" fill="#e2e8f0"/>
+                            </g>
+                        </g>
+                        <text x="215" y="184" text-anchor="middle" font-weight="600" font-size="14" fill="#566376">Rubric-of-Rubrics</text>
+
+                    </g>
+                </g>
+
+                <!-- Connect A to C -->
+                <path d="M 304 150 H 400" stroke="#1976D2" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)"/>
+                <text x="348" y="140" text-anchor="middle" font-size="12" fill="#1976D2" font-weight="600">Assessed in C</text>
+
+                <!-- Connect B to C -->
+                <path d="M 312 472 H 350 V 300 H 400" stroke="#1976D2" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-start)"/>
+                <text x="352" y="288" text-anchor="middle" font-size="12" fill="#1976D2" font-weight="600">Applied in C</text>
+                <text x="352" y="492" text-anchor="middle" font-size="12" fill="#1976D2" font-weight="600">Refines B</text>
+                <!-- Black background box for Qualified Feedback -->
+                <rect x="56" y="367" width="288" height="32" rx="4" fill="#000000"/>
+                <text x="200" y="390" text-anchor="middle" font-size="16" fill="#ffffff" font-weight="600">Qualified and Refinable Feedback</text>
+
+                <!-- Why explanation card (top) - with stacked effect -->
+                <g transform="translate(870, 180)">
+                   <!-- Background stacked cards -->
+                   <rect x="6" y="6" width="180" height="70" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-opacity="0.3"/>
+                   <rect x="3" y="3" width="180" height="70" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-opacity="0.5"/>
+                   <!-- Main card -->
+                   <rect x="0" y="0" width="180" height="70" rx="6" fill="#ecfdf5" stroke="#22c55e" filter="url(#shadow)"/>
+                   <text x="90" y="18" text-anchor="middle" font-size="12" fill="#15803d" font-weight="600">Why Score 3?</text>
+                   <line x1="10" y1="24" x2="170" y2="24" stroke="#22c55e" stroke-opacity="0.3"/>
+                   <text x="15" y="38" font-size="10" fill="#059669">The writing explains...</text>
+                   <text x="15" y="50" font-size="10" fill="#059669">However, the development...</text>
+                   <text x="15" y="62" font-size="10" fill="#059669">it could benefit from...</text>
+                </g>
+
+                <!-- Why-not explanation card (top) - with stacked effect -->
+                <g transform="translate(870, 270)">
+                   <!-- Background stacked cards -->
+                   <rect x="6" y="6" width="180" height="90" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-opacity="0.3"/>
+                   <rect x="3" y="3" width="180" height="90" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-opacity="0.5"/>
+                   <!-- Main card -->
+                   <rect x="0" y="0" width="180" height="90" rx="6" fill="#fffbeb" stroke="#f59e0b" filter="url(#shadow)"/>
+                   <text x="90" y="18" text-anchor="middle" font-size="12" fill="#b45309" font-weight="600">Why not Score 4?</text>
+                   <line x1="10" y1="24" x2="170" y2="24" stroke="#f59e0b" stroke-opacity="0.3"/>
+                   <text x="15" y="38" font-size="10" fill="#d97706">...some incorrect words like...</text>
+                   <text x="15" y="50" font-size="10" fill="#d97706">...is not consistently formal...</text>
+                   <text x="15" y="62" font-size="10" fill="#d97706">but lacks the complexity...</text>
+                   <rect x="20" y="70" width="140" height="16" rx="3" fill="#f97316"/>
+                   <text x="90" y="81" text-anchor="middle" font-size="10" fill="white" font-weight="600">Get Example for Score 4</text>
+                </g>
+
+                <!-- Lines from B's Organization cell to Why card -->
+                <path d="M 656 240 H 870" stroke="#1976D2" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <!-- Starting point dot -->
+                <circle cx="656" cy="240" r="3" fill="#1976D2"/>
+
+                <!-- Lines from B's Language Use cell to Why-not card -->
+                <path d="M 588 311 H 870" stroke="#1976D2" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M 588 276 H 628" stroke="#1976D2" stroke-width="2" fill="none" />
+                <path d="M 628 276 V 311" stroke="#1976D2" stroke-width="2" fill="none" />
+                <!-- Starting point dots -->
+                <circle cx="588" cy="311" r="3" fill="#1976D2"/>
+                <circle cx="588" cy="276" r="3" fill="#1976D2"/>
+
+                <!-- Connect Why-not to C -->
+                <path d="M 1034 349 H 1122" stroke="#1976D2" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)"/>
+                <text x="1088" y="337" text-anchor="middle" font-size="12" fill="#1976D2" font-weight="600">Suggest</text>
+                <circle cx="1033" cy="349" r="3" fill="#1976D2"/>
+
+
+                <!-- D. Suggested Writing Example (right, top) - with enhanced stacked effect -->
+                <g transform="translate(1120, 120)">
+                    <!-- Background stacked cards -->
+                    <rect x="15" y="15" width="360" height="264" rx="12" fill="#f8fafc" stroke="#f1f5f9" stroke-opacity="0.3"/>
+                    <text x="190" y="140" text-anchor="middle" font-size="14" fill="#94a3b8" font-weight="500" opacity="0.6">Example 3</text>
+                    <rect x="10" y="10" width="360" height="256" rx="12" fill="#f1f5f9" stroke="#e2e8f0" stroke-opacity="0.5"/>
+                    <text x="185" y="135" text-anchor="middle" font-size="14" fill="#64748b" font-weight="500" opacity="0.7">Example 2</text>
+                    <rect x="5" y="5" width="360" height="256" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-opacity="0.7"/>
+                    <text x="180" y="130" text-anchor="middle" font-size="14" fill="#7e57c2" font-weight="500" opacity="0.8">Example 1</text>
+                    <!-- Main card -->
+                    <rect x="0" y="0" width="360" height="256" rx="12" fill="#ffffff" stroke="#64748b" filter="url(#shadow)"/>
+                    <!-- Stack indicator -->
+                    <!-- C圆形背景 -->
+                    <circle cx="40" cy="19" r="12" fill="#000000"/>
+                    <text x="40" y="24" font-weight="600" text-anchor="middle" fill="#ffffff" font-size="14">D</text>
+                    <text x="60" y="25" font-weight="600" text-anchor="start" fill="#1e293b">Suggested Writing Example</text>
+                    <line x1="15" y1="35" x2="355" y2="35" stroke="#e2e8f0"/>
+                    <text x="20" y="52" font-size="13" fill="#475569" font-weight="550"><tspan font-weight="600">Criterion:</tspan> Vocabulary</text>
+                    <text x="20" y="70" font-size="13" fill="#475569"><tspan font-weight="600">Original:</tspan> Score 1 → <tspan font-weight="600">Target:</tspan> Score 4</text>
+                    <foreignObject x="10" y="80" width="210" height="178">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px; color:#334155; padding: 3px; border-radius: 6px; line-height: 1.5; border: 1px solid #f1f5f9; background-color: #f8fafc">
+                          <p>I <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">say</del> <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">believe</span> part<span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">-</span>time jobs <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">are good</del> <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">provide valuable</span> experience for all of us. <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">But bad</del> <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">However, it can be detrimental</span> if <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">the </del>students <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">try</del> <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">attempt</span> to make part<span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">-</span>time jobs <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">as </del>their <del style="color:#0f766e; background-color: transparent; text-decoration: line-through;">eternal job</del> <span style="color:#0f766e; background-color:#ccfbf1; border-radius: 3px; padding: 1px 3px; font-weight: 500;">permanent occupation</span>.</p>
+                        </div>
+                    </foreignObject>
+
+                    <!-- Comment Panel inside D module -->
+                    <g transform="translate(224, 80)">
+                        <!-- Comment panel background -->
+                        <rect x="0" y="0" width="130" height="172" rx="6" fill="#fafafa" stroke="#e5e7eb"/>
+
+                        <!-- Comment item 1 -->
+                        <g transform="translate(2, 1)">
+                          <rect x="0" y="0" width="126" height="52" rx="4" fill="#ffffff" stroke="#f3f4f6"/>
+                          <!-- User avatar -->
+                          <circle cx="12" cy="12" r="10" fill="#fcc703"/>
+                          <text x="12" y="17" text-anchor="middle" font-size="12" fill="#ffffff" font-weight="600">⇄</text>
+                          <!-- Comment indicator -->
+                          <rect x="26" y="5" width="96" height="14" rx="2" fill="#ccfbf1"/>
+                          <text x="74" y="16" text-anchor="middle" font-size="12" fill="#64748b" font-weight="600">"say"→"believe"</text>
+                          <!-- Comment dots -->
+                          <circle cx="30" cy="27" r="2" fill="#94a3b8"/>
+                          <circle cx="37" cy="27" r="2" fill="#94a3b8"/>
+                          <circle cx="44" cy="27" r="2" fill="#94a3b8"/>
+                          <!-- Status indicator -->
+                          <g>
+                            <!-- Accept button -->
+                            <rect x="26" y="34" width="45" height="14" rx="7" fill="#10b981" stroke="#059669" stroke-width="1"/>
+                            <text x="48.5" y="46" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="700">✓</text>
+                            <!-- Reject button -->
+                            <rect x="77" y="34" width="45" height="14" rx="7" fill="#ef4444" stroke="#dc2626" stroke-width="1"/>
+                            <text x="99.5" y="45" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="700">×</text>
+                          </g>
+                        </g>
+
+                        <!-- Comment item 2 -->
+                        <g transform="translate(2, 55)">
+                            <rect x="0" y="0" width="126" height="52" rx="4" fill="#ffffff" stroke="#f3f4f6"/>
+                            <!-- User avatar -->
+                            <circle cx="12" cy="12" r="10" fill="#10b981"/>
+                            <text x="12" y="17" text-anchor="middle" font-size="16" fill="#ffffff" font-weight="600">+</text>
+                            <!-- Comment indicator -->
+                            <rect x="26" y="5" width="96" height="14" rx="2" fill="#ccfbf1"/>
+                            <text x="74" y="16" text-anchor="middle" font-size="12" fill="#64748b" font-weight="600">"-"</text>
+                            <!-- Comment dots -->
+                            <circle cx="30" cy="27" r="2" fill="#94a3b8"/>
+                            <circle cx="37" cy="27" r="2" fill="#94a3b8"/>
+                            <circle cx="44" cy="27" r="2" fill="#94a3b8"/>
+                            <!-- Status indicator -->
+                            <g>
+                              <!-- Accept button -->
+                              <rect x="26" y="34" width="45" height="14" rx="7" fill="#10b981" stroke="#059669" stroke-width="1"/>
+                              <text x="48.5" y="46" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="700">✓</text>
+                              <!-- Reject button -->
+                              <rect x="77" y="34" width="45" height="14" rx="7" fill="#ef4444" stroke="#dc2626" stroke-width="1"/>
+                              <text x="99.5" y="45" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="700">×</text>
+                            </g>
+                        </g>
+
+                        <!-- Comment item 3 -->
+                        <g transform="translate(2, 109)">
+                            <rect x="0" y="0" width="126" height="52" rx="4" fill="#ffffff" stroke="#f3f4f6"/>
+                            <!-- User avatar -->
+                            <circle cx="12" cy="12" r="10" fill="#ef4444"/>
+                            <text x="12" y="8" text-anchor="middle" font-size="18" fill="#ffffff" font-weight="700">_</text>
+                            <!-- Comment indicator -->
+                            <rect x="26" y="5" width="96" height="14" rx="2" fill="#ccfbf1"/>
+                            <text x="74" y="16" text-anchor="middle" font-size="12" fill="#64748b" font-weight="600">"as"</text>
+                            <!-- Comment dots -->
+                            <circle cx="30" cy="27" r="2" fill="#94a3b8"/>
+                            <circle cx="37" cy="27" r="2" fill="#94a3b8"/>
+                            <circle cx="44" cy="27" r="2" fill="#94a3b8"/>
+                            <!-- Status indicator -->
+                            <g>
+                              <!-- Accept button -->
+                              <rect x="26" y="34" width="45" height="14" rx="7" fill="#10b981" stroke="#059669" stroke-width="1"/>
+                              <text x="48.5" y="46" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="700">✓</text>
+                              <!-- Reject button -->
+                              <rect x="77" y="34" width="45" height="14" rx="7" fill="#ef4444" stroke="#dc2626" stroke-width="1"/>
+                              <text x="99.5" y="45" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="700">×</text>
+                            </g>
+                            <text x="60" y="61" font-size="14" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                        </g>
+                    </g>
+                </g>
+
+                <!-- Top-loop Revision: C (mid-top) -> A (mid-top) -->
+                <path d="M 1305 120 H 1305 Q 1305 120 1305 120 V 80 Q 1305 80 1285 80 H 192 Q 200 80 183 80 V 119" stroke="#1976D2" stroke-width="3" fill="none" stroke-dasharray="8,6" marker-end="url(#arrowhead-small)" stroke-linejoin="round" stroke-linecap="round"/>
+                <g transform="translate(640, 86)">
+                    <rect x="-20" y="0" width="260" height="25" rx="6" fill="#d2e5f9"/>
+                    <text x="110" y="17" text-anchor="middle" font-size="16" fill="#1976D2" font-weight="600">Revise the Writing Iteratively</text>
+                </g>
+            </g>
+
+            <!-- Separator Line -->
+            <line x1="80" y1="400" x2="1520" y2="400" stroke="#d1d5db" stroke-dasharray="5,5"/>
+
+            <!-- Bottom Row: Meta-Evaluation of the Rubric -->
+            <g id="rubric-evaluation-flow">
+                <!-- <text x="800" y="400" font-size="18" font-weight="600" text-anchor="middle" fill="#1f2937">2. LLM-Assisted Meta-Evaluation (of the Rubric)</text> -->
+
+                <!-- Connect D to B (Meta-Evaluation section) -->
+                <path d="M 312 550 H 400" stroke="#7e57c2" stroke-width="2.5" fill="none" marker-end="url(#arrow-indigo)"/>
+                <text x="355" y="540" text-anchor="middle" font-size="12" fill="#7e57c2" font-weight="600">Assessed in C</text>
+
+
+                <!-- Why-not explanation card (bottom) - with stacked effect -->
+                <g transform="translate(870, 448)">
+                  <!-- Background stacked cards -->
+                  <rect x="6" y="6" width="180" height="90" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-opacity="0.3"/>
+                  <rect x="3" y="3" width="180" height="90" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-opacity="0.5"/>
+                  <!-- Main card -->
+                  <rect x="0" y="0" width="180" height="90" rx="6" fill="#fffbeb" stroke="#f59e0b" filter="url(#shadow)"/>
+                  <text x="90" y="18" text-anchor="middle" font-size="12" fill="#b45309" font-weight="600">Why not Score 4?</text>
+                  <line x1="10" y1="24" x2="170" y2="24" stroke="#f59e0b" stroke-opacity="0.3"/>
+                  <text x="15" y="38" font-size="10" fill="#d97706">Criteria alignment needs better</text>
+                  <text x="15" y="50" font-size="10" fill="#d97706">distinction between levels and</text>
+                  <text x="15" y="62" font-size="10" fill="#d97706">more precise descriptors.</text>
+                  <rect x="20" y="70" width="140" height="16" rx="3" fill="#f97316"/>
+                  <text x="90" y="81" text-anchor="middle" font-size="10" fill="white" font-weight="600">Get Example for Score 4</text>
+                </g>
+                <!-- Lines from B's Criteria Alignment cell (Meta-Evaluation section) to Why-not card -->
+                <path d="M 590 495 H 870" stroke="#7e57c2" stroke-width="2" fill="none" marker-end="url(#arrow-indigo)"/>
+                <path d="M 590 530 H 620" stroke="#7e57c2" stroke-width="2" fill="none" />
+                <path d="M 620 495 V 531" stroke="#7e57c2" stroke-width="2" fill="none" />
+                <!-- Starting point dots -->
+                <circle cx="590" cy="495" r="3" fill="#7e57c2"/>
+                <circle cx="590" cy="530" r="3" fill="#7e57c2"/>
+
+
+                <!-- Why explanation card (bottom) - with stacked effect -->
+                <g transform="translate(870, 550)">
+                  <!-- Background stacked cards -->
+                  <rect x="6" y="6" width="180" height="70" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-opacity="0.3"/>
+                  <rect x="3" y="3" width="180" height="70" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-opacity="0.5"/>
+                  <!-- Main card -->
+                  <rect x="0" y="0" width="180" height="70" rx="6" fill="#ecfdf5" stroke="#22c55e" filter="url(#shadow)"/>
+                  <text x="90" y="18" text-anchor="middle" font-size="12" fill="#15803d" font-weight="600">Why Score 2?</text>
+                  <line x1="10" y1="24" x2="170" y2="24" stroke="#22c55e" stroke-opacity="0.3"/>
+                  <text x="15" y="38" font-size="10" fill="#059669">Descriptive language provides</text>
+                  <text x="15" y="50" font-size="10" fill="#059669">some clarity but lacks specific</text>
+                  <text x="15" y="62" font-size="10" fill="#059669">examples and detailed criteria.</text>
+                </g>
+                <!-- Lines from B's Descriptive Lang cell (Meta-Evaluation section) to Why card -->
+                <path d="M 724 565 H 870" stroke="#7e57c2" stroke-width="2" fill="none" marker-end="url(#arrow-indigo)"/>
+                <!-- Starting point dot -->
+                <circle cx="724" cy="565" r="3" fill="#7e57c2"/>
+
+                <!-- Connect Why-not to E -->
+                <path d="M 1033 525 H 1122" stroke="#7e57c2" stroke-width="2.5" fill="none" marker-end="url(#arrow-indigo)"/>
+                <text x="1088" y="513" text-anchor="middle" font-size="12" fill="#7e57c2" font-weight="600">Suggest</text>
+                <circle cx="1033" cy="525" r="3" fill="#7e57c2"/>
+
+                <!-- E. Suggested Rubric Example (right, bottom) - with enhanced stacked effect -->
+                <g transform="translate(1120, 420)">
+                    <!-- Background stacked cards -->
+                    <rect x="15" y="15" width="350" height="192" rx="12" fill="#f8fafc" stroke="#f1f5f9" stroke-opacity="0.3"/>
+                    <text x="190" y="120" text-anchor="middle" font-size="14" fill="#94a3b8" font-weight="500" opacity="0.6">Rubric 3</text>
+                    <rect x="10" y="10" width="350" height="192" rx="12" fill="#f1f5f9" stroke="#e2e8f0" stroke-opacity="0.5"/>
+                    <text x="185" y="115" text-anchor="middle" font-size="14" fill="#64748b" font-weight="500" opacity="0.7">Rubric 2</text>
+                    <rect x="5" y="5" width="350" height="192" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-opacity="0.7"/>
+                    <text x="180" y="110" text-anchor="middle" font-size="14" fill="#7e57c2" font-weight="500" opacity="0.8">Rubric 1</text>
+                    <!-- Main card -->
+                    <rect x="0" y="0" width="350" height="192" rx="12" fill="#ffffff" stroke="#64748b" filter="url(#shadow)"/>
+                    <!-- Stack indicator -->
+                    <!-- E圆形背景 -->
+                    <circle cx="40" cy="19" r="12" fill="#000000"/>
+                    <text x="40" y="24" font-weight="600" text-anchor="middle" fill="#ffffff" font-size="14">E</text>
+                    <text x="60" y="25" font-weight="600" text-anchor="start" fill="#1e293b">Suggested Rubric Example</text>
+                    <line x1="15" y1="35" x2="335" y2="35" stroke="#e2e8f0"/>
+                    <text x="20" y="52" font-size="13" fill="#475569" font-weight="550"><tspan font-weight="600">Criterion:</tspan> Criteria Alignment</text>
+                    <text x="20" y="70" font-size="13" fill="#475569"><tspan font-weight="600">Original:</tspan> Score 3 → <tspan font-weight="600">Target:</tspan> Score 4</text>
+                    <!-- Rubric Table (AI-Enhanced Version) -->
+                    <g transform="translate(12, 85)">
+                        <!-- Header Row -->
+                        <rect x="0" y="0" width="76" height="25" rx="4" fill="#f1f5f9"/>
+                        <text x="35" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#64748b">Criterion</text>
+                        <rect x="80" y="0" width="60" height="25" rx="4" fill="#f1f5f9"/>
+                        <text x="108" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#566376">4</text>
+                        <rect x="144" y="0" width="60" height="25" rx="4" fill="#f1f5f9"/>
+                        <text x="173" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#566376">3</text>
+                        <rect x="208" y="0" width="60" height="25" rx="4" fill="#f1f5f9"/>
+                        <text x="238" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#566376">2</text>
+                        <rect x="272" y="0" width="60" height="25" rx="4" fill="#f1f5f9"/>
+                        <text x="303" y="17" text-anchor="middle" font-weight="600" font-size="12" fill="#566376">1</text>
+
+                        <!-- Content Row -->
+                        <text x="0" y="48" font-size="12" fill="#334155" font-weight="600">Content</text>
+                        <rect x="80" y="30" width="60" height="20" fill="#f1f5f9" rx="2"/>
+                        <foreignObject x="82" y="33" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 10px; line-height: 1.1; color:#566376; text-align: center; font-weight: 500;">Exceptional...</div>
+                        </foreignObject>
+                        <rect x="144" y="30" width="60" height="20" fill="#f1f5f9" rx="2"/>
+                        <foreignObject x="144" y="33" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 10px; line-height: 1.1; color:#566376; text-align: center; font-weight: 500;">Clear...</div>
+                        </foreignObject>
+                        <rect x="208" y="30" width="60" height="20" fill="#f1f5f9" rx="2"/>
+                        <foreignObject x="209" y="33" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 10px; line-height: 1.1; color:#566376; text-align: center; font-weight: 500;">Basic...</div>
+                        </foreignObject>
+                        <rect x="272" y="30" width="60" height="20" fill="#f1f5f9" rx="2"/>
+                        <foreignObject x="274" y="33" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 10px; line-height: 1.1; color:#566376; text-align: center; font-weight: 500;">Minimal...</div>
+                        </foreignObject>
+                        <line x1="0" y1="55" x2="330" y2="55" stroke="#f1f5f9"/>
+
+                        <!-- Organization Row -->
+                        <text x="-1" y="73" font-size="12" fill="#334155" font-weight="600">Organization</text>
+                        <rect x="80" y="55" width="60" height="20" fill="#f1f5f9" rx="2"/>
+                        <foreignObject x="82" y="58" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 10px; line-height: 1.1; color:#566376; text-align: center; font-weight: 500;">Logical...</div>
+                        </foreignObject>
+                        <rect x="144" y="55" width="60" height="20" fill="#f1f5f9" rx="2"/>
+                        <foreignObject x="146" y="58" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 10px; line-height: 1.1; color:#566376; text-align: center; font-weight: 500;">Some...</div>
+                        </foreignObject>
+                        <rect x="208" y="55" width="60" height="20" fill="#f1f5f9" rx="2"/>
+                        <foreignObject x="208" y="58" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 10px; line-height: 1.1; color:#566376; text-align: center; font-weight: 500;">Basic...</div>
+                        </foreignObject>
+                        <rect x="272" y="55" width="60" height="20" fill="#f1f5f9" rx="2"/>
+                        <foreignObject x="275" y="58" width="56" height="14">
+                           <div xmlns="http://www.w3.org/1999/xhtml" style="font-size: 10px; line-height: 1.1; color:#566376; text-align: center; font-weight: 500;">Poor...</div>
+                        </foreignObject>
+                        <line x1="0" y1="80" x2="330" y2="80" stroke="#f1f5f9"/>
+
+                        <!-- More indicators -->
+                        <text x="35" y="98" font-size="16" fill="#94a3b8" font-weight="bold" text-anchor="middle">⋮</text>
+                        <rect x="80" y="85" width="60" height="15" fill="#f8fafc" rx="2"/>
+                        <text x="108" y="95" font-size="10" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                        <rect x="145" y="85" width="60" height="15" fill="#f8fafc" rx="2"/>
+                        <text x="173" y="95" font-size="10" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                        <rect x="209" y="85" width="60" height="15" fill="#f8fafc" rx="2"/>
+                        <text x="238" y="95" font-size="10" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                        <rect x="275" y="85" width="60" height="15" fill="#f8fafc" rx="2"/>
+                        <text x="303" y="95" font-size="10" fill="#94a3b8" font-weight="400" text-anchor="middle">•••</text>
+                    </g>
+                </g>
+
+                <!-- Bottom-loop Refinement: F (mid-bottom) -> D (mid-bottom) -->
+                <path d="M 1305 614 Q 1305 614 1305 614 V 640 Q 1285 640 1285 640 H 195 Q 189 640 178 640 V 616" stroke="#7e57c2" stroke-width="3" fill="none" stroke-dasharray="8,6" marker-end="url(#arrow-indigo-small)" stroke-linejoin="round" stroke-linecap="round"/>
+                <g transform="translate(640, 645)">
+                    <rect x="-90" y="0" width="400" height="25" rx="6" fill="#e2d9f2"/>
+                    <text x="110" y="17" text-anchor="middle" font-size="16" fill="#7e57c2" font-weight="600">Revise the User-Defined Rubric Iteratively</text>
+                </g>
+            </g>
+
+            <!-- Bottom caption row with black boxes and connecting lines -->
+            <g transform="translate(104, 710)">
+
+                <!-- Connecting lines between boxes -->
+                <line x1="158" y1="-5" x2="356" y2="-5" stroke="#000000" stroke-width="2.5" marker-end="url(#arrow-black)"/>
+                <line x1="605" y1="-5" x2="760" y2="-5" stroke="#000000" stroke-width="2.5" marker-end="url(#arrow-black)"/>
+                <line x1="925" y1="-5" x2="1102" y2="-5" stroke="#000000" stroke-width="2.5" marker-end="url(#arrow-black)"/>
+
+                <!-- Box 1: User Artifacts (centered at x=88) -->
+                <rect x="18" y="-22" width="140" height="32" rx="4" fill="#000000"/>
+                <text x="88" y="0" text-anchor="middle" font-size="17" font-weight="600" fill="#ffffff">User Artifacts</text>
+
+                <!-- Box 2: Interactive Evaluation (centered at x=505) -->
+                <rect x="354" y="-22" width="320" height="32" rx="4" fill="#000000"/>
+                <text x="515" y="0" text-anchor="middle" font-size="17" font-weight="600" fill="#ffffff">Specified and Scaffolded Feedback</text>
+
+                <!-- Box 3: Explanations (centered at x=855) -->
+                <rect x="758" y="-22" width="200" height="32" rx="4" fill="#000000"/>
+                <text x="858" y="0" text-anchor="middle" font-size="17" font-weight="600" fill="#ffffff">Justified Feedback</text>
+
+                <!-- Box 4: Actionable Guidance (centered at x=1155) -->
+                <rect x="1100" y="-22" width="210" height="32" rx="4" fill="#000000"/>
+                <text x="1205" y="0" text-anchor="middle" font-size="17" font-weight="600" fill="#ffffff">Actionable Feedback</text>
+            </g>
+
+
+        </svg>
+
+    </div>
+</body>
+</html>
